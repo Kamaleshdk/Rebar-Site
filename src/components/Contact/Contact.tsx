@@ -16,8 +16,9 @@ export function Contact() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const formEl = e.currentTarget // saved now — e.currentTarget becomes null once the event finishes, before our await resolves
     setSubmitting(true)
-    const form = new FormData(e.currentTarget)
+    const form = new FormData(formEl)
     const payload = {
       name: String(form.get('name') || ''),
       company: String(form.get('company') || ''),
@@ -31,7 +32,7 @@ export function Contact() {
     const res = await submitEnquiry(payload)
     setResult(res)
     setSubmitting(false)
-    if (res.status !== 'error') e.currentTarget.reset()
+    if (res.status !== 'error') formEl.reset()
   }
 
   return (
