@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Mail, Phone, MapPin, ExternalLink, Download } from 'lucide-react'
+import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react'
 import { Container } from '../shared/Container'
 import { SectionHeading } from '../shared/SectionHeading'
 import { siteConfig } from '../../config/siteConfig'
-import { submitEnquiry, exportSubmissionsToExcel } from '../../services/contactService'
+import { submitEnquiry } from '../../services/contactService'
 import type { SubmitResult } from '../../services/contactService'
 
 const FIELD_CLASS =
@@ -111,20 +111,12 @@ export function Contact() {
               </button>
 
               {result && (
-                <div role="status" className="mt-4">
-                  <p className={`text-[13px] leading-relaxed ${result.status === 'error' ? 'text-red-700' : 'text-steel'}`}>
-                    {result.message}
-                  </p>
-                  {result.status !== 'error' && (
-                    <button
-                      type="button"
-                      onClick={() => void exportSubmissionsToExcel()}
-                      className="mt-3 inline-flex items-center gap-2 font-mono text-[12px] text-ink underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-dim"
-                    >
-                      <Download size={13} /> Download enquiries as Excel
-                    </button>
-                  )}
-                </div>
+                <p
+                  role="status"
+                  className={`mt-4 text-[13px] leading-relaxed ${result.status === 'error' ? 'text-red-700' : 'text-steel'}`}
+                >
+                  {result.message}
+                </p>
               )}
             </div>
           </form>
